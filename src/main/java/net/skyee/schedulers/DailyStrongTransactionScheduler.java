@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-@On("0 0 18 * * ?")
+@On("0 0 8 * * ?")
 public class DailyStrongTransactionScheduler extends Job {
     Logger log = LoggerFactory.getLogger(DailyStrongTransactionScheduler.class);
 
