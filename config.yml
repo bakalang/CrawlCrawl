@@ -1,0 +1,15 @@
+template: hi template!
+
+database:
+  driverClass: org.mariadb.jdbc.Driver
+  user: root
+  password: cc
+  url:
+  properties:
+    charSet: UTF-8
+
+server:
+  rootPath: '/api/*'
+  applicationConnectors:
+    - type: http
+      port: 8080

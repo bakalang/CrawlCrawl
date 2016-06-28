@@ -22,7 +22,7 @@ public class SimpleService extends Application<SampleConf> {
     @Override
     public void initialize(Bootstrap<SampleConf> bootstrap) {
 
-        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
+        bootstrap.addBundle(new AssetsBundle("/web", "/web", "index.html", "web"));
 
         // Enable variable substitution with environment variables
         bootstrap.setConfigurationSourceProvider(
@@ -39,13 +39,12 @@ public class SimpleService extends Application<SampleConf> {
     public void run(SampleConf sampleConf, Environment environment) throws Exception {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, sampleConf.getDataSourceFactory(), "mariadb");
-//        final StocksDAO dao = jdbi.onDemand(StocksDAO.class);
 
         final Template template = sampleConf.buildTemplate();
-//        environment.jersey().register(new TemplateResource(template, dao));
 
         context = Context.getInstance().updateDBInterface(jdbi);
         TemplateResource templateResource = new TemplateResource(template, context.templateDAO());
         environment.jersey().register(templateResource);
+//        environment.jersey().register(MultiPartFeature.class);
     }
 }
