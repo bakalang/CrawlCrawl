@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Map;
 
-public class SampleConf extends Configuration {
+public class AppConf extends Configuration {
 
     @NotEmpty
     private String template;

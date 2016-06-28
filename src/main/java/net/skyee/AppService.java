@@ -10,17 +10,21 @@ import io.dropwizard.setup.Environment;
 import net.skyee.bean.Template;
 import net.skyee.resources.TemplateResource;
 import org.skife.jdbi.v2.DBI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
-public class SimpleService extends Application<SampleConf> {
+public class AppService extends Application<AppConf> {
     private Context context;
 
+    private final Logger logger = LoggerFactory.getLogger(AppService.class);
+
     public static void main(String[] args) throws Exception {
-        new SimpleService().run(args);
+        new AppService().run(args);
     }
 
     @Override
-    public void initialize(Bootstrap<SampleConf> bootstrap) {
+    public void initialize(Bootstrap<AppConf> bootstrap) {
 
         bootstrap.addBundle(new AssetsBundle("/web", "/web", "index.html", "web"));
 
@@ -36,11 +40,13 @@ public class SimpleService extends Application<SampleConf> {
     }
 
     @Override
-    public void run(SampleConf sampleConf, Environment environment) throws Exception {
-        final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(environment, sampleConf.getDataSourceFactory(), "mariadb");
+    public void run(AppConf appConf, Environment environment) throws Exception {
+        logger.info("running DropWizard!");
 
-        final Template template = sampleConf.buildTemplate();
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, appConf.getDataSourceFactory(), "mariadb");
+
+        final Template template = appConf.buildTemplate();
 
         context = Context.getInstance().updateDBInterface(jdbi);
         TemplateResource templateResource = new TemplateResource(template, context.templateDAO());

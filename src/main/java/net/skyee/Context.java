@@ -1,6 +1,5 @@
 package net.skyee;
 
-
 import net.skyee.dao.StocksDAO;
 import org.skife.jdbi.v2.DBI;
 
